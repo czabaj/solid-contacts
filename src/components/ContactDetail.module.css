@@ -1,0 +1,19 @@
+.header {
+  font-size: var(--name-size);
+  font-weight: 400;
+  margin: 0;
+}
+
+.details {
+  display: grid;
+}
+
+.details dt {
+  color: var(--color-label);
+  grid-column: 1;
+  text-align: right;
+}
+
+.details dd {
+  margin: 0;
+}

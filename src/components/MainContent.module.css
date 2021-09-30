@@ -1,0 +1,40 @@
+.container {
+  --color-label: #808080;
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  height: 100%;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+.top {
+  --name-size: 300%;
+}
+
+.middle {
+  --column-gap: 0.7rem;
+  column-gap: var(--column-gap);
+  grid-template-columns: 10rem 1fr;
+  margin-top: var(--s3);
+  row-gap: var(--s0);
+  row-gap: var(--s0);
+}
+
+.middle :where(label, dt):nth-of-type(n + 2)::before {
+  content: " ";
+  height: 1px;
+  position: absolute;
+  width: 100%;
+  background-color: #e6e6e6;
+  left: 0;
+  transform: translateY(calc(-1 * var(--column-gap)));
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row-reverse;
+}

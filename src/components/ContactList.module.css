@@ -1,0 +1,31 @@
+.listInitials {
+  color: #737373;
+  padding-left: 0.5rem;
+}
+
+.listInitials > li::before {
+  color: #737373;
+  content: attr(data-initial);
+}
+
+.listContacts {
+  border-top: 1px solid #c3c3c3;
+  padding-left: 1rem;
+}
+
+.listContacts li {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-right: 1em;
+}
+
+.listContacts a {
+  color: var(--color-foreground);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.listContacts a:hover {
+  text-decoration: underline;
+}

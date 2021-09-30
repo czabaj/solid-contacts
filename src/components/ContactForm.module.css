@@ -1,0 +1,45 @@
+.form {
+  position: relative;
+}
+
+.form label {
+  color: var(--color-label);
+}
+
+.form fieldset {
+  border: none;
+  margin: 0;
+  min-width: auto;
+  padding: 0;
+  width: 30rem;
+}
+
+.form :is(input, textarea) {
+  border: 2px solid #bfbfbf;
+  border-radius: 4px;
+}
+
+.name {
+  column-gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 100%;
+  row-gap: var(--s-4);
+}
+
+.name label {
+  grid-row: 2;
+}
+
+.name input {
+  font-size: var(--name-size);
+  min-width: 0;
+}
+
+.other {
+  display: grid;
+}
+
+.other label {
+  text-align: right;
+}

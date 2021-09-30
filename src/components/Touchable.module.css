@@ -1,0 +1,13 @@
+.anchorReset {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.buttonReset {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  padding: 0;
+  text-decoration: none;
+  width: fit-content;
+}

@@ -2,7 +2,7 @@ import { Component, createSignal, onCleanup } from "solid-js";
 
 import { ContactList } from "./components/ContactList";
 import { MainContent } from "./components/MainContent";
-import * as styles from "./App.module.css";
+import classes from "./App.module.css";
 import { CONTACT_LIST_ID } from "./constants";
 import { getContactsStorage } from "./contactStorage";
 
@@ -20,15 +20,15 @@ export const App: Component = () => {
   const contactStorage = getContactsStorage();
   const currentHash = getLocationHash();
   return (
-    <div class={styles.withSidebar}>
-      <div class={styles.sidebar}>
+    <div class={classes.withSidebar}>
+      <div class={classes.sidebar}>
         <ContactList
           contacts={contactStorage.contacts}
           currentHash={currentHash}
           id={CONTACT_LIST_ID}
         />
       </div>
-      <div class={styles.notSidebar}>
+      <div class={classes.notSidebar}>
         <MainContent contactStorage={contactStorage} currentHash={currentHash} />
       </div>
     </div>

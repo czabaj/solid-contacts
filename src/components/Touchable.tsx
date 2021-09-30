@@ -1,15 +1,16 @@
 import cx from "classnames";
 import type { Component } from "solid-js";
 
-import * as styles from "./Touchable.module.css";
+import classes from "./Touchable.module.css";
 
 export type Props = {
   className?: string;
   disabled?: boolean;
   href?: string;
   onClick?: (event: MouseEvent) => void;
+  ref?: HTMLAnchorElement | HTMLButtonElement;
   title?: string;
-  type?: string;
+  type?: `button` | `reset` | `submit`;
 };
 
 export const Touchable: Component<Props> = ({
@@ -32,16 +33,18 @@ export const Touchable: Component<Props> = ({
           }
         : {
             href,
+            onClick,
           })}
-      className={cx(styles.anchorReset, className)}
-      forwardRef={ref}
+      className={cx(classes.anchorReset, className)}
+      ref={ref as HTMLAnchorElement | undefined}
     />
   ) : (
     <button
       {...other}
-      className={cx(styles.buttonReset, className)}
+      className={cx(classes.buttonReset, className)}
       disabled={disabled}
-      forwardRef={ref}
+      onClick={onClick}
+      ref={ref as HTMLButtonElement | undefined}
       type={type}
     />
   );

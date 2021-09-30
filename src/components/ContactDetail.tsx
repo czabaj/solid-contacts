@@ -4,8 +4,8 @@ import type { Accessor, Component } from "solid-js";
 import { EDIT_MODE_SUFFIX } from "../constants";
 import type { Contact } from "../models";
 import { Button } from "./Button";
-import * as styles from "./ContactDetail.module.css";
-import * as mainContentStyles from "./MainContent.module.css";
+import classes from "./ContactDetail.module.css";
+import classesContentStyles from "./MainContent.module.css";
 
 export type Props = {
   contact: Accessor<Contact>;
@@ -13,12 +13,12 @@ export type Props = {
 
 export const ContactDetail: Component<Props> = ({ contact }) => {
   return (
-    <article className={mainContentStyles.container}>
-      <address className={mainContentStyles.main}>
-        <h2 className={cx(mainContentStyles.top, styles.header)}>
+    <article className={classesContentStyles.container}>
+      <address className={classesContentStyles.main}>
+        <h2 className={cx(classesContentStyles.top, classes.header)}>
           {contact().first_name} {contact().last_name}
         </h2>
-        <dl className={cx(mainContentStyles.middle, styles.details)}>
+        <dl className={cx(classesContentStyles.middle, classes.details)}>
           <dt>phone</dt>
           <dd>
             <a href={`tel:${contact().phone}`}>{contact().phone}</a>
@@ -33,7 +33,7 @@ export const ContactDetail: Component<Props> = ({ contact }) => {
           <dd>{contact().note}</dd>
         </dl>
       </address>
-      <div className={mainContentStyles.buttons}>
+      <div className={classesContentStyles.buttons}>
         <Button href={`#${contact().idx}${EDIT_MODE_SUFFIX}`}>
           Edit{" "}
           <span className="visually-hidden">

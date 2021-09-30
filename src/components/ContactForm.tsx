@@ -6,9 +6,9 @@ import { CONTACT_LIST_ID } from "../constants";
 import type { ContactsStorage } from "../contactStorage";
 import { Contact } from "../models";
 import { Button } from "./Button";
-import * as mainContentStyles from "./MainContent.module.css";
-import * as styles from "./ContactForm.module.css";
-import * as touchableStyles from "./Touchable.module.css";
+import classesMainContent from "./MainContent.module.css";
+import classes from "./ContactForm.module.css";
+import { Touchable } from "./Touchable";
 
 const EditButton: Component<{
   contact: Accessor<Contact>;
@@ -22,11 +22,10 @@ const EditButton: Component<{
   createEffect(() => {
     listElement()?.scrollIntoView(false);
   });
-  let removeButtonRef: HTMLButtonElement;
+  let removeButtonRef!: HTMLButtonElement;
   return (
-    <Portal mount={listElement()}>
-      <button
-        className={touchableStyles.buttonReset}
+    <Portal mount={listElement()!}>
+      <Touchable
         onClick={onClick}
         ref={removeButtonRef}
         title={`remove ${contact().first_name} ${
@@ -35,7 +34,7 @@ const EditButton: Component<{
         type="button"
       >
         ⛔️
-      </button>
+      </Touchable>
     </Portal>
   );
 };
@@ -48,7 +47,7 @@ export type Props = {
 export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
   return (
     <form
-      className={cx(mainContentStyles.container, styles.form)}
+      className={cx(classesMainContent.container, classes.form)}
       onSubmit={(event) => {
         event.preventDefault();
         const form = event.target as HTMLFormElement;
@@ -69,10 +68,10 @@ export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
         }
       }}
     >
-      <fieldset className={mainContentStyles.main}>
+      <fieldset className={classesMainContent.main}>
         <legend className="visually-hidden">Add new contact</legend>
 
-        <div className={cx(mainContentStyles.top, styles.name)}>
+        <div className={cx(classesMainContent.top, classes.name)}>
           <label htmlFor="first_name">first name</label>
           <input
             id="first_name"
@@ -89,7 +88,7 @@ export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
             value={contact()?.last_name}
           />
         </div>
-        <div className={cx(mainContentStyles.middle, styles.other)}>
+        <div className={cx(classesMainContent.middle, classes.other)}>
           <label htmlFor="phone">phone</label>
           <input id="phone" name="phone" type="tel" value={contact()?.phone} />
           <label htmlFor="email">email</label>
@@ -110,7 +109,7 @@ export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
           <textarea id="note" name="note" rows="4" value={contact()?.note} />
         </div>
       </fieldset>
-      <div className={mainContentStyles.buttons}>
+      <div className={classesMainContent.buttons}>
         <Button>Done</Button>
         {contact() ? (
           <>

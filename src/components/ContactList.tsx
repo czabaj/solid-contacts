@@ -1,7 +1,7 @@
 import { Accessor, Component, For, createMemo } from "solid-js";
 
 import { Contact } from "../models";
-import * as styles from "./ContactList.module.css";
+import classes from "./ContactList.module.css";
 
 export type Props = {
   contacts: Accessor<Array<Contact | null>>;
@@ -39,13 +39,13 @@ export const ContactList: Component<Props> = ({
   });
 
   return (
-    <ol aria-label="list of contacts" className={styles.listInitials} id={id}>
+    <ol aria-label="list of contacts" className={classes.listInitials} id={id}>
       <For each={sortedContacts()}>
         {({ initial, records }) => (
           <li data-initial={initial}>
             <ol
               aria-label={`contacts whose last name starts with a ${initial}`}
-              className={styles.listContacts}
+              className={classes.listContacts}
             >
               <For each={records}>
                 {(contact) => {

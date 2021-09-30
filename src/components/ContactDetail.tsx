@@ -40,7 +40,16 @@ export const ContactDetail: Component<Props> = ({ contact }) => {
             contact {contact().first_name} {contact().last_name}
           </span>
         </Button>
-        <Button href="/" title="add new contact">
+        <Button
+          href="/"
+          onClick={(event) => {
+            // navigation also works but it reloads the page which destroys all
+            // changes made to the data, so rather only assign hash
+            event.preventDefault();
+            window.location.hash = ``;
+          }}
+          title="add new contact"
+        >
           ＋
         </Button>
       </div>

@@ -13,7 +13,8 @@ export const contactsWithIdx: Contact[] = contactsSource.map(
 );
 
 export const getContactsStorage = () => {
-  const [contacts, setContacts] = createSignal(contactsWithIdx);
+  const [contacts, setContacts] =
+    createSignal<Array<Contact | null>>(contactsWithIdx);
   return {
     contacts,
     addContact: (newContact: Omit<Contact, `idx`>) => {
@@ -25,17 +26,13 @@ export const getContactsStorage = () => {
       return newContactWithIdx;
     },
     deleteContact: (contactIdx: number) =>
-      setContacts((contacts) => {
-        const newContacts = [
-          ...contacts.slice(0, contactIdx),
-          ...contacts.slice(contactIdx + 1),
-        ];
-        return newContacts;
-      }),
+      setContacts((contacts) =>
+        contacts.map((contact, idx) => (idx !== contactIdx ? contact : null))
+      ),
     updateContact: (contactIdx: number, newData: Partial<Contact>) =>
       setContacts((contacts) =>
         contacts.map((contact, idx) =>
-          idx !== contactIdx ? contact : { ...contact, ...newData }
+          idx !== contactIdx ? contact : { ...(contact as Contact), ...newData }
         )
       ),
   };

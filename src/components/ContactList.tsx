@@ -4,15 +4,16 @@ import { Contact } from "../models";
 import * as styles from "./ContactList.module.css";
 
 export type Props = {
-  contacts: Accessor<Contact[]>;
+  contacts: Accessor<Array<Contact | null>>;
   currentHash: Accessor<string>;
   id?: string;
 };
 
 const collator = new Intl.Collator("en");
 const compareContacts = (a: Contact, b: Contact) =>
+  // compare by last_last name, where equal, compare by first_namek
   collator.compare(a.last_name, b.last_name) ||
-  collator.compare(a.first_name, b.first_name);
+  collator.compare(a.first_name || ``, b.first_name || ``);
 
 export const ContactList: Component<Props> = ({
   contacts,
@@ -22,10 +23,12 @@ export const ContactList: Component<Props> = ({
   const sortedContacts = createMemo(() => {
     const contactsByInitial: Record<string, Contact[]> = {};
     for (const contact of contacts()) {
-      const initial = contact.last_name.charAt(0).toUpperCase();
-      const records =
-        contactsByInitial[initial] || (contactsByInitial[initial] = []);
-      records.push(contact);
+      if (contact) {
+        const initial = contact.last_name.charAt(0).toUpperCase();
+        const records =
+          contactsByInitial[initial] || (contactsByInitial[initial] = []);
+        records.push(contact);
+      }
     }
     return Object.keys(contactsByInitial)
       .sort()

@@ -1,8 +1,9 @@
 import cx from "classnames";
-import { Accessor, Component, Show, createEffect, createMemo } from "solid-js";
+import { Accessor, Component, createEffect, createMemo } from "solid-js";
 import { Portal } from "solid-js/web";
 
 import { CONTACT_LIST_ID } from "../constants";
+import type { ContactsStorage } from "../contactStorage";
 import { Contact } from "../models";
 import { Button } from "./Button";
 import * as mainContentStyles from "./MainContent.module.css";
@@ -11,7 +12,8 @@ import * as touchableStyles from "./Touchable.module.css";
 
 const EditButton: Component<{
   contact: Accessor<Contact>;
-}> = ({ contact }) => {
+  onClick: () => void;
+}> = ({ contact, onClick }) => {
   const listElement = createMemo(
     () =>
       document.querySelector(`#${CONTACT_LIST_ID} [href="#${contact().idx}"]`)
@@ -25,6 +27,7 @@ const EditButton: Component<{
     <Portal mount={listElement()}>
       <button
         className={touchableStyles.buttonReset}
+        onClick={onClick}
         ref={removeButtonRef}
         title={`remove ${contact().first_name} ${
           contact().last_name
@@ -39,15 +42,31 @@ const EditButton: Component<{
 
 export type Props = {
   contact: Accessor<Contact | null>;
+  contactStorage: ContactsStorage;
 };
 
-export const ContactForm: Component<Props> = ({ contact }) => {
+export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
   return (
     <form
       className={cx(mainContentStyles.container, styles.form)}
       onSubmit={(event) => {
         event.preventDefault();
         const form = event.target as HTMLFormElement;
+        if (form.reportValidity()) {
+          const formData = new FormData(form);
+          const newData = Object.fromEntries(formData.entries()) as Pick<
+            Contact,
+            `first_name` | `last_name` | `phone` | `address` | `note`
+          >;
+          const currentContact = contact();
+          if (currentContact) {
+            contactStorage.updateContact(currentContact.idx, newData);
+            window.location.hash = `#${currentContact.idx}`;
+          } else {
+            const newContact = contactStorage.addContact!(newData);
+            window.location.hash = `#${newContact.idx}`;
+          }
+        }
       }}
     >
       <fieldset className={mainContentStyles.main}>
@@ -93,12 +112,24 @@ export const ContactForm: Component<Props> = ({ contact }) => {
       </fieldset>
       <div className={mainContentStyles.buttons}>
         <Button>Done</Button>
-        <Show when={contact()}>
-          <EditButton contact={contact} />
-        </Show>
-        <Button title="clear current form" type="reset">
-          ＋
-        </Button>
+        {contact() ? (
+          <>
+            <EditButton
+              contact={contact as any}
+              onClick={() => {
+                contactStorage.deleteContact(contact()!.idx);
+                window.location.hash = `#0`;
+              }}
+            />
+            <Button href="/" title="add new contact">
+              ＋
+            </Button>
+          </>
+        ) : (
+          <Button title="clear current form" type="reset">
+            ＋
+          </Button>
+        )}
       </div>
     </form>
   );

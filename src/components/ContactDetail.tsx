@@ -9,10 +9,9 @@ import * as mainContentStyles from "./MainContent.module.css";
 
 export type Props = {
   contact: Accessor<Contact>;
-  currentHash: Accessor<string>;
 };
 
-export const ContactDetail: Component<Props> = ({ currentHash, contact }) => {
+export const ContactDetail: Component<Props> = ({ contact }) => {
   return (
     <article className={mainContentStyles.container}>
       <address className={mainContentStyles.main}>
@@ -35,7 +34,7 @@ export const ContactDetail: Component<Props> = ({ currentHash, contact }) => {
         </dl>
       </address>
       <div className={mainContentStyles.buttons}>
-        <Button href={`${currentHash()}${EDIT_MODE_SUFFIX}`}>
+        <Button href={`#${contact().idx}${EDIT_MODE_SUFFIX}`}>
           Edit{" "}
           <span className="visually-hidden">
             contact {contact().first_name} {contact().last_name}

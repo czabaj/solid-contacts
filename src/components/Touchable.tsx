@@ -1,5 +1,5 @@
 import cx from "classnames";
-import type { Component } from "solid-js";
+import { Component, splitProps } from "solid-js";
 
 import classes from "./Touchable.module.css";
 
@@ -13,39 +13,37 @@ export type Props = {
   type?: `button` | `reset` | `submit`;
 };
 
-export const Touchable: Component<Props> = ({
-  className,
-  disabled,
-  href,
-  onClick,
-  ref,
-  type,
-  ...other
-}) => {
-  const isAnchor = typeof href === `string`;
+export const Touchable: Component<Props> = (props) => {
+  const [local, others] = splitProps(props, [
+    `disabled`,
+    `href`,
+    `onClick`,
+    `type`,
+  ]);
+  const isAnchor = typeof local.href === `string`;
   return isAnchor ? (
     <a
-      {...other}
-      {...(disabled
+      {...others}
+      {...(local.disabled
         ? {
             href: ``,
             "aria-disabled": `true`,
           }
         : {
-            href,
-            onClick,
+            href: local.href,
+            onClick: local.onClick,
           })}
-      className={cx(classes.anchorReset, className)}
-      ref={ref as HTMLAnchorElement | undefined}
+      className={cx(classes.anchorReset, props.className)}
+      ref={props.ref as HTMLAnchorElement | undefined}
     />
   ) : (
     <button
-      {...other}
-      className={cx(classes.buttonReset, className)}
-      disabled={disabled}
-      onClick={onClick}
-      ref={ref as HTMLButtonElement | undefined}
-      type={type}
+      {...others}
+      className={cx(classes.buttonReset, props.className)}
+      disabled={local.disabled}
+      onClick={local.onClick}
+      ref={props.ref as HTMLButtonElement | undefined}
+      type={local.type}
     />
   );
 };

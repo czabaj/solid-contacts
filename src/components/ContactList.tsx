@@ -15,14 +15,10 @@ const compareContacts = (a: Contact, b: Contact) =>
   collator.compare(a.last_name, b.last_name) ||
   collator.compare(a.first_name || ``, b.first_name || ``);
 
-export const ContactList: Component<Props> = ({
-  contacts,
-  currentHash,
-  id,
-}) => {
+export const ContactList: Component<Props> = (props) => {
   const sortedContacts = createMemo(() => {
     const contactsByInitial: Record<string, Contact[]> = {};
-    for (const contact of contacts()) {
+    for (const contact of props.contacts()) {
       if (contact) {
         const initial = contact.last_name.charAt(0).toUpperCase();
         const records =
@@ -39,7 +35,7 @@ export const ContactList: Component<Props> = ({
   });
 
   return (
-    <ol aria-label="list of contacts" className={classes.listInitials} id={id}>
+    <ol aria-label="list of contacts" className={classes.listInitials} id={props.id}>
       <For each={sortedContacts()}>
         {({ initial, records }) => (
           <li data-initial={initial}>
@@ -55,7 +51,7 @@ export const ContactList: Component<Props> = ({
                       <a
                         href={contactHash}
                         aria-current={
-                          currentHash() === contactHash ? `page` : undefined
+                          props.currentHash() === contactHash ? `page` : undefined
                         }
                       >{`${contact.first_name} ${contact.last_name}`}</a>
                     </li>

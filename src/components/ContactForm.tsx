@@ -44,7 +44,8 @@ export type Props = {
   contactStorage: ContactsStorage;
 };
 
-export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
+export const ContactForm: Component<Props> = (props) => {
+  const { contact } = props
   return (
     <form
       className={cx(classesMainContent.container, classes.form)}
@@ -59,10 +60,10 @@ export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
           >;
           const currentContact = contact();
           if (currentContact) {
-            contactStorage.updateContact(currentContact.idx, newData);
+            props.contactStorage.updateContact(currentContact.idx, newData);
             window.location.hash = `#${currentContact.idx}`;
           } else {
-            const newContact = contactStorage.addContact!(newData);
+            const newContact = props.contactStorage.addContact!(newData);
             window.location.hash = `#${newContact.idx}`;
           }
         }
@@ -116,7 +117,7 @@ export const ContactForm: Component<Props> = ({ contact, contactStorage }) => {
             <EditButton
               contact={contact as any}
               onClick={() => {
-                contactStorage.deleteContact(contact()!.idx);
+                props.contactStorage.deleteContact(contact()!.idx);
                 window.location.hash = `#0`;
               }}
             />

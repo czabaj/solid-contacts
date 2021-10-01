@@ -11,12 +11,9 @@ export type Props = {
   currentHash: Accessor<string>;
 };
 
-export const MainContent: Component<Props> = ({
-  contactStorage,
-  currentHash,
-}) => {
+export const MainContent: Component<Props> = (props) => {
   const parsedHash = createMemo(() => {
-    const hash = currentHash();
+    const hash = props.currentHash();
     const contactIdx = parseInt(hash.slice(1), 10);
     return isNaN(contactIdx)
       ? null
@@ -24,19 +21,19 @@ export const MainContent: Component<Props> = ({
   });
   const contact = createMemo(() => {
     const hashInfo = parsedHash();
-    return hashInfo && contactStorage.contacts()[hashInfo!.contactIdx];
+    return hashInfo && props.contactStorage.contacts()[hashInfo!.contactIdx];
   });
 
   return (
     <Switch>
       <Match when={parsedHash()?.edit}>
-        <ContactForm contact={contact} contactStorage={contactStorage} />
+        <ContactForm contact={contact} contactStorage={props.contactStorage} />
       </Match>
       <Match when={parsedHash()}>
         <ContactDetail contact={contact as any} />
       </Match>
       <Match when={true}>
-        <ContactForm contact={contact} contactStorage={contactStorage} />
+        <ContactForm contact={contact} contactStorage={props.contactStorage} />
       </Match>
     </Switch>
   );

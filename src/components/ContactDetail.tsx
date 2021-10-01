@@ -11,7 +11,8 @@ export type Props = {
   contact: Accessor<Contact>;
 };
 
-export const ContactDetail: Component<Props> = ({ contact }) => {
+export const ContactDetail: Component<Props> = (props) => {
+  const { contact } = props;
   return (
     <article className={classesContentStyles.container}>
       <address className={classesContentStyles.main}>

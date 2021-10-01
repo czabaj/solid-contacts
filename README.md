@@ -1,13 +1,16 @@
+# Solid Contacts
+
+This is a test of [Solid JS UI Framework](https://solidjs.com), presenting MacOS-like contacts application.
+
+The HTML is written with emphasis on clean HTML markup and good a11y. The project uses TypeScript and modular CSS.
+
 ## Usage
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.js.org/) via `pnpm up -Lri`.
-
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+Install dependencies with command
 
 ```bash
 $ npm install # or pnpm install or yarn install
 ```
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
 ## Available Scripts
 

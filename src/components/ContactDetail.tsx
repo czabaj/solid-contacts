@@ -1,5 +1,5 @@
 import cx from "classnames";
-import type { Accessor, Component } from "solid-js";
+import { Accessor, Component, Show } from "solid-js";
 
 import { EDIT_MODE_SUFFIX } from "../constants";
 import type { Contact } from "../models";
@@ -21,17 +21,25 @@ export const ContactDetail: Component<Props> = (props) => {
         </h2>
         <dl className={cx(classesContentStyles.middle, classes.details)}>
           <dt>phone</dt>
-          <dd>
-            <a href={`tel:${contact().phone}`}>{contact().phone}</a>
-          </dd>
+          <Show when={contact().phone}>
+            <dd>
+              <a href={`tel:${contact().phone}`}>{contact().phone}</a>
+            </dd>
+          </Show>
           <dt>email</dt>
-          <dd>
-            <a href={`mailto:${contact().email}`}>{contact().email}</a>
-          </dd>
+          <Show when={contact().email}>
+            <dd>
+              <a href={`mailto:${contact().email}`}>{contact().email}</a>
+            </dd>
+          </Show>
           <dt>address</dt>
-          <dd>{contact().address}</dd>
+          <Show when={contact().address}>
+            <dd>{contact().address}</dd>
+          </Show>
           <dt>note</dt>
-          <dd>{contact().note}</dd>
+          <Show when={contact().note}>
+            <dd>{contact().note}</dd>
+          </Show>
         </dl>
       </address>
       <div className={classesContentStyles.buttons}>

@@ -35,6 +35,7 @@
 
 .buttons {
   display: flex;
-  justify-content: space-between;
+  /* improve tab order of the bottom buttons */
   flex-flow: row-reverse;
+  justify-content: space-between;
 }

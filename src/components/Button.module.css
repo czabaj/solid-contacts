@@ -1,3 +1,4 @@
+/* double the class to increase specificity over Touchable rules */
 .base.base {
   background-color: unset;
   border-radius: 6px;

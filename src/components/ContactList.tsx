@@ -35,7 +35,11 @@ export const ContactList: Component<Props> = (props) => {
   });
 
   return (
-    <ol aria-label="list of contacts" className={classes.listInitials} id={props.id}>
+    <ol
+      aria-label="list of contacts"
+      className={classes.listInitials}
+      id={props.id}
+    >
       <For each={sortedContacts()}>
         {({ initial, records }) => (
           <li data-initial={initial}>
@@ -51,7 +55,9 @@ export const ContactList: Component<Props> = (props) => {
                       <a
                         href={contactHash}
                         aria-current={
-                          props.currentHash() === contactHash ? `page` : undefined
+                          props.currentHash().startsWith(contactHash)
+                            ? `page`
+                            : undefined
                         }
                       >{`${contact.first_name} ${contact.last_name}`}</a>
                     </li>

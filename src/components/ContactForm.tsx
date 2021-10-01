@@ -10,24 +10,22 @@ import classesMainContent from "./MainContent.module.css";
 import classes from "./ContactForm.module.css";
 import { Touchable } from "./Touchable";
 
-const EditButton: Component<{
+const RemoveButton: Component<{
   contact: Accessor<Contact>;
   onClick: () => void;
 }> = ({ contact, onClick }) => {
   const listElement = createMemo(
     () =>
-      document.querySelector(`#${CONTACT_LIST_ID} [href="#${contact().idx}"]`)
+      document.querySelector(`#${CONTACT_LIST_ID} [aria-current="page"]`)
         ?.parentElement
   );
   createEffect(() => {
     listElement()?.scrollIntoView(false);
   });
-  let removeButtonRef!: HTMLButtonElement;
   return (
     <Portal mount={listElement()!}>
       <Touchable
         onClick={onClick}
-        ref={removeButtonRef}
         title={`remove ${contact().first_name} ${
           contact().last_name
         } from the contacts`}
@@ -45,7 +43,7 @@ export type Props = {
 };
 
 export const ContactForm: Component<Props> = (props) => {
-  const { contact } = props
+  const { contact } = props;
   return (
     <form
       className={cx(classesMainContent.container, classes.form)}
@@ -114,7 +112,7 @@ export const ContactForm: Component<Props> = (props) => {
         <Button>Done</Button>
         {contact() ? (
           <>
-            <EditButton
+            <RemoveButton
               contact={contact as any}
               onClick={() => {
                 props.contactStorage.deleteContact(contact()!.idx);

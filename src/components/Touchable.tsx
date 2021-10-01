@@ -8,7 +8,6 @@ export type Props = {
   disabled?: boolean;
   href?: string;
   onClick?: (event: MouseEvent) => void;
-  ref?: HTMLAnchorElement | HTMLButtonElement;
   title?: string;
   type?: `button` | `reset` | `submit`;
 };
@@ -34,7 +33,6 @@ export const Touchable: Component<Props> = (props) => {
             onClick: local.onClick,
           })}
       className={cx(classes.anchorReset, props.className)}
-      ref={props.ref as HTMLAnchorElement | undefined}
     />
   ) : (
     <button
@@ -42,7 +40,6 @@ export const Touchable: Component<Props> = (props) => {
       className={cx(classes.buttonReset, props.className)}
       disabled={local.disabled}
       onClick={local.onClick}
-      ref={props.ref as HTMLButtonElement | undefined}
       type={local.type}
     />
   );

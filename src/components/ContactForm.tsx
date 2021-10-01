@@ -68,7 +68,11 @@ export const ContactForm: Component<Props> = (props) => {
       }}
     >
       <fieldset className={classesMainContent.main}>
-        <legend className="visually-hidden">Add new contact</legend>
+        <legend className="visually-hidden">
+          {contact()
+            ? `Edit user ${contact()!.first_name || ""} ${contact()!.last_name}`
+            : `Add new contact`}
+        </legend>
 
         <div className={cx(classesMainContent.top, classes.name)}>
           <label htmlFor="first_name">first name</label>

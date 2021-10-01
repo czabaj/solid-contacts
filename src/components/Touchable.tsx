@@ -22,7 +22,7 @@ export const Touchable: Component<Props> = ({
   type,
   ...other
 }) => {
-  const isAnchor = href !== undefined;
+  const isAnchor = typeof href === `string`;
   return isAnchor ? (
     <a
       {...other}
